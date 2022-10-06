@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.6.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.7'
+    implementation 'org.springdoc:springdoc-openapi-data-rest:1.6.6'
+
+    implementation 'com.auth0:java-jwt:3.18.3'
+    implementation 'org.modelmapper:modelmapper:3.0.0'
+
+    runtimeOnly 'org.postgresql:postgresql:42.3.3'
+    testImplementation 'com.h2database:h2:2.1.210'
+
+    implementation 'com.amazonaws:aws-java-sdk-ses:1.12.213'
+    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
+    implementation 'com.amazonaws:aws-java-sdk-s3'
+}
+
+group = 'be.optis'
+version = '0.0.1-SNAPSHOT'
+description = 'OpticketAPI'
+java.sourceCompatibility = JavaVersion.VERSION_17
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

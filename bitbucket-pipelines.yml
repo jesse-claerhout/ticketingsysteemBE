@@ -1,0 +1,24 @@
+image: openjdk:17.0.2-jdk-buster
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build/Test
+          script:
+            - chmod +x gradlew
+            - ./gradlew build --no-daemon
+          artifacts:
+            - build/libs/opticket-api-0.0.1-SNAPSHOT.jar
+      - step:
+          name: Build and push container
+          caches:
+            - docker
+          script:
+            - docker build -t opticket-api:latest .
+            - pipe: atlassian/aws-ecr-push-image:1.5.0
+              variables:
+                AWS_ACCESS_KEY_ID: ${AWS_KEY}
+                AWS_SECRET_ACCESS_KEY: ${AWS_SECRET}
+                AWS_DEFAULT_REGION: eu-west-1
+                IMAGE_NAME: opticket-api
